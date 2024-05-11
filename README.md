@@ -6,3 +6,4 @@ Website:  https://acdc.foxylab.com<br/>
 This software is licensed under the GPL v3.0 License.<br/><br/>
 Detailed description (in russian) - https://acdc.foxylab.com/node/43.
 
+[Building crf_rust](.BUILDING.md)
