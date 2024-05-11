@@ -1,7 +1,14 @@
 //Cosmic Ray Finder (Rust version)
-//v.0.0.1
+//v.0.0.2
 //(C) 2024 Alexey "FoxyLab" Voronin
 //https://acdc.foxylab.com
+
+/*
+Whats new:
+v.0.0.1 - first version
+v.0.0.2 - added sealed camera lens test
+*/
+
 extern crate camera_capture;
 extern crate chrono;
 extern crate image;
@@ -10,15 +17,16 @@ use chrono::{DateTime, Local};
 use std::fs::File;
 use std::path::Path;
 use std::time::SystemTime;
-use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
 
+const SEALED_LIMIT: f32 = 70.0; //limit for sealed camera lens
 const LIMIT: u8 = 150; //limit for color channel for event
 const CNT_MAX: u16 = 1000; //number of frames for speed calc
 const FRAMERATE: f64 = 30.0;
 
 fn main() {
-    println!("Cosmic Ray Finder (Rust version) v.0.0.1");
+    println!("Cosmic Ray Finder (Rust version) v.0.0.2");
     println!("(C) 2024 Alexey \"FoxyLab\" Voronin");
     println!("https://acdc.foxylab.com");
     let cam = camera_capture::create(0).unwrap();
@@ -38,22 +46,59 @@ fn main() {
     let mut red_evt;
     let mut green_evt;
     let mut blue_evt;
+    let mut distance: f32;
+    let mut check = true;
+    
+    let kill = Arc::new(AtomicBool::new(false));
+    let kill_cloned = kill.clone();
 
-    let running = Arc::new(AtomicBool::new(true));
-    let r = running.clone();
     ctrlc::set_handler(move || {
-        r.store(false, Ordering::SeqCst);
+        println!("");
+        println!("CTRL-C pressed...");
+        kill_cloned.store(true, Ordering::SeqCst);
     }).expect("Error setting Ctrl-C handler");
-    println!("Start...");
-    let mut start = SystemTime::now()
-        .duration_since(SystemTime::UNIX_EPOCH)
-        .expect("");
+
+    let mut start = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).expect("");
     let mut stop;
     let mut cnt: u16 = 0;
     loop {
+        if kill.load(Ordering::SeqCst) == true {
+            println!("Killed...");
+            break;
+        }
         let img = cam_iter.next().unwrap();
-
         max = 0.0;
+        if check {
+            println!("Sealed camera lens check...");
+            //sealed cam test
+            for pixel in img.pixels() { //loop for all pixels
+                //color channels for current pixel get
+                red = pixel[0];
+                green = pixel[1];
+                blue = pixel[2];
+                //color distance calc
+                distance =
+                    (red as f32 * red as f32 + green as f32 * green as f32 + blue as f32 * blue as f32)
+                        .sqrt();
+                if distance > max {
+                    max = distance;
+                }
+            }
+            println!("MAX: {}", max as u32);
+            if max > SEALED_LIMIT {
+                println!("Seal the camera lens from light and try again!");
+                let test_path = Path::new("check.png");
+                let _ = &mut File::create(&test_path).unwrap();
+                img.save(&test_path).unwrap();
+                println!("Test frame saved to check.png");
+                std::process::exit(0);
+            }
+            check = false;
+            println!("O.K.");
+            println!("Capture start...");
+            start = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).expect("");
+            cnt = 0;
+        }
         flag = false;
         red_evt = 0;
         green_evt = 0;
@@ -64,7 +109,7 @@ fn main() {
             green = pixel[1];
             blue = pixel[2];
             //color distance calc
-            let distance =
+            distance =
                 (red as f32 * red as f32 + green as f32 * green as f32 + blue as f32 * blue as f32)
                     .sqrt();
             if distance > max {
@@ -117,10 +162,5 @@ fn main() {
                     .expect("");
             }
         }
-        
-        if running.load(Ordering::SeqCst) == false {
-            println!(" Exit...");
-            break;
-        }
     }
-} 
+}
