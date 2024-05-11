@@ -17,3 +17,5 @@ This can surely be optimized.
 ## Related publications
 
 Polatoğlu, A., & Yeşilyaprak, C. (2023). Using and Testing Camera Sensors with Different Devices at Cosmic Ray Detection. Erzincan University Journal of Science and Technology, 16(2), 590-597. [PDF download](https://dergipark.org.tr/en/download/article-file/2616216)
+
+DIY Cosmic Ray Detector Using a Webcam and Lead Shielding (YouTube)[https://youtu.be/k-Nxso1DdhA?feature=shared]
