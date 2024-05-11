@@ -1,4 +1,4 @@
-# Building crf_rust for Linux
+# Building crf_rust
 
 ## Repository
 
