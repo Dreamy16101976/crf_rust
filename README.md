@@ -4,6 +4,9 @@ Copyright (C) 2024 Alexey "FoxyLab" Voronin<br/>
 Email:    support@foxylab.com<br/>
 Website:  https://acdc.foxylab.com<br/>
 This software is licensed under the GPL v3.0 License.<br/><br/>
+
+## Description
 Detailed description (in russian) - https://acdc.foxylab.com/node/43.
 
+## Building
 [Building crf_rust](.BUILDING.md)
