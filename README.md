@@ -13,7 +13,7 @@ Detailed description (in russian) - https://acdc.foxylab.com/node/43.
 
 ## Using
 The webcam is placed in an opaque container (or the laptop camera window is sealed with several layers of insulating tape).<br>
-Run binary file <i>crf_rust</i>.
+Run binary file <i>crf_rust</i>.<br>
 Frames from the camera is read in a loop and it is determined whether for the pixel with the largest color distance, the level of any color channel exceeds the specified limit..<br>
 if so, the event is logged and the frame is saved in PNG-file.<br>
 Press Ctrl-C to exit from the program.
