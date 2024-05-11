@@ -69,6 +69,7 @@ fn main() {
                     .sqrt();
             if distance > max {
                 max = distance;
+                flag = false;
                 if red > LIMIT { //event detected
                     flag = true;
                 }
