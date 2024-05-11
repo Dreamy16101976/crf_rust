@@ -10,9 +10,9 @@ Clone down the [crf_rust repository](https://github.com/Dreamy16101976/crf_rust)
 
 ## Required crates
 
-camera_capture
-image
-chrono
+- camera_capture - for frames capture
+- image - for camera_capture
+- chrono - for capture speed calculation
 
 ## Building from source
 
