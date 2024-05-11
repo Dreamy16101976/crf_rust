@@ -30,5 +30,5 @@ For a release package:
 cargo build --release
 ```
 
-the binary can be found in `target/release` folder.
+the binary <i>crf</i> can be found in `target/release` folder.
 
