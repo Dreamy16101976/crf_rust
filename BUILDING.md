@@ -8,6 +8,12 @@ Clone down the [crf_rust repository](https://github.com/Dreamy16101976/crf_rust)
 
 - Install [Rust](https://www.rust-lang.org/tools/install). If it's already installed, make sure it's up-to-date:
 
+## Required crates
+
+camera_capture
+image
+chrono
+
 ## Building from source
 
 Once you have the dependencies installed, you can build crf_rust using [Cargo](https://doc.rust-lang.org/cargo/).
