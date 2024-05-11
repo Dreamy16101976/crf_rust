@@ -10,3 +10,6 @@ Detailed description (in russian) - https://acdc.foxylab.com/node/43.
 
 ## Building
 [Building crf_rust](BUILDING.md)
+
+## Notes:
+This can surely be optimized. 
