@@ -12,8 +12,9 @@ Detailed description (in russian) - https://acdc.foxylab.com/node/43.
 [Building crf_rust](BUILDING.md)
 
 ## Using
-The webcam is placed in an opaque container (or the laptop camera window is sealed with several layers of insulating tape).
-Frames from the camera is read in a loop and it is determined whether for the pixel with the largest color distance, the level of any color channel exceeds the specified limit - if so, the event is logged and the frame is saved in PNG-file.
+The webcam is placed in an opaque container (or the laptop camera window is sealed with several layers of insulating tape).<br>
+Frames from the camera is read in a loop and it is determined whether for the pixel with the largest color distance, the level of any color channel exceeds the specified limit..<br>
+if so, the event is logged and the frame is saved in PNG-file.
 
 ## Notes:
 This can surely be optimized. 
