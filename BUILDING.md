@@ -6,7 +6,11 @@ Clone down the [crf_rust repository](https://github.com/Dreamy16101976/crf_rust)
 
 ## Dependencies
 
-- Install [Rust](https://www.rust-lang.org/tools/install). If it's already installed, make sure it's up-to-date:
+- Install [Rust](https://www.rust-lang.org/tools/install). If it's already installed, make sure it's up-to-date.
+- Install [<i>libv4l<i>](https://github.com/philips/libv4l) - collection of video4linux support libraries:
+  ```
+  sudo apt-get install -y libv4l-dev
+  ```
 
 ## Required crates
 
