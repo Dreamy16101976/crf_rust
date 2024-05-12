@@ -15,7 +15,7 @@ Detailed description (in russian) - https://acdc.foxylab.com/node/43.
 The webcam is placed in an opaque container (or the laptop camera window is sealed with several layers of insulating tape).<br>
 Run program: 
 ```
-<i>crf_rust</i>  
+./crf_rust
 ```
 or 
 ```
