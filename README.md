@@ -46,4 +46,3 @@ Polatoğlu, A., & Yeşilyaprak, C. (2023). Using and Testing Camera Sensors with
 
 DIY Cosmic Ray Detector Using a Webcam and Lead Shielding [YouTube](https://youtu.be/k-Nxso1DdhA?feature=shared)
 
-[Cosmic Ray Finder - A muon spotter?](http://www.quantumheat.org/index.php/en/home/mfmp-blog/540-cosmic-ray-finder-a-muon-spotter)
