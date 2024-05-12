@@ -22,7 +22,6 @@ or
 cargo run
 ```
 <br>
-
 By default, the camera with index 0 is selected for capturing frames. You can change the active camera by specifying its index on the command line, for example:
 
 ```
