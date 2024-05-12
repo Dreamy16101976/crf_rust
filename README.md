@@ -14,15 +14,20 @@ Detailed description (in russian) - https://acdc.foxylab.com/node/43.
 ## Using
 The webcam is placed in an opaque container (or the laptop camera window is sealed with several layers of insulating tape).<br>
 Run program: 
+
 ```
 ./crf_rust
 ```
+
 or 
+
 ```
 cargo run
 ```
+
 <br>
 By default, the camera with index 0 is selected for capturing frames. You can change the active camera by specifying its index on the command line, for example:
+
 ```
 ./crf_rust
 ```
