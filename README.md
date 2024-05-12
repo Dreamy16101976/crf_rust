@@ -22,10 +22,11 @@ or
 cargo run
 ```
 <br>
-By default, the camera with index 0 is selected for capturing frames. You can change the active camera by specifying its index on the command line, for example,
+By default, the camera with index 0 is selected for capturing frames. You can change the active camera by specifying its index on the command line, for example:
 ```
 ./crf_rust 1
 ```
+
 <br>
 Frames from the camera is read in a loop and it is determined whether for the pixel with the largest color distance, the level of any color channel exceeds the specified limit..<br>
 if so, the event is logged and the frame is saved in PNG-file.<br>
