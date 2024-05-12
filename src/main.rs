@@ -1,5 +1,5 @@
 //Cosmic Ray Finder (Rust version)
-//v.0.0.2
+//v.0.0.3
 //(C) 2024 Alexey "FoxyLab" Voronin
 //https://acdc.foxylab.com
 
@@ -7,6 +7,7 @@
 Whats new:
 v.0.0.1 - first version
 v.0.0.2 - added sealed camera lens test
+v.0.0.3 - added camera select & camera test
 */
 
 extern crate camera_capture;
@@ -19,6 +20,7 @@ use std::path::Path;
 use std::time::SystemTime;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
+use std::env;
 
 const SEALED_LIMIT: f32 = 70.0; //limit for sealed camera lens
 const LIMIT: u8 = 150; //limit for color channel for event
@@ -26,12 +28,31 @@ const CNT_MAX: u16 = 1000; //number of frames for speed calc
 const FRAMERATE: f64 = 30.0;
 
 fn main() {
-    println!("Cosmic Ray Finder (Rust version) v.0.0.2");
+    println!("Cosmic Ray Finder (Rust version) v.0.0.3");
     println!("(C) 2024 Alexey \"FoxyLab\" Voronin");
     println!("https://acdc.foxylab.com");
-    let cam = camera_capture::create(0).unwrap();
+    //camera select
+    let cam_idx: u32;
+    let args: Vec<String> = env::args().collect();
+    if args.len()>1 {
+        cam_idx = args[1].parse::<u32>().unwrap();
+        println!("Camera {} selected", cam_idx);
+    } else {
+        cam_idx = 0;
+        println!("Camera 0 selected by default");
+    }
+    
+    
+    //camera test
+    match camera_capture::create(cam_idx).unwrap().fps(FRAMERATE) {
+        Ok(_) => println!("Camera is O.K."),
+        Err(_) => { println!("Camera ERROR! Exited...") ;
+            std::process::exit(0); },
+    }
 
+    let cam = camera_capture::create(cam_idx).unwrap();
     let mut cam_iter = cam.fps(FRAMERATE).unwrap().start().unwrap();
+
     let img = cam_iter.next().unwrap();
     let img_width = img.dimensions().0;
     let img_height = img.dimensions().1;
@@ -163,4 +184,4 @@ fn main() {
             }
         }
     }
-}
+} 
