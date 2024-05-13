@@ -37,6 +37,11 @@ Frames from the camera is read in a loop and it is determined whether for the pi
 if so, the event is logged and the frame is saved in PNG-file <i>YYYYMMDDHHMMSSmmm.png</i>.<br>
 Press Ctrl-C to exit from the program.<br>
 
+<i>v4l2-ctl</i> is a utility allowing to control the camera subsystem.<br>
+You can install v4l2-ctl by running the following command:
+```
+sudo apt install v4l-utils
+```
 You may use the following command to check which devices are connected to your computer at the moment:
 
 ```
@@ -54,7 +59,7 @@ To increase the frame capture speed, you can use the following commands:<br>
 v4l2-ctl -d 0 -c auto_exposure=1
 v4l2-ctl -d 0 -c exposure_time_absolute=250
 ```
-
+In my case, this increased the capture speed from 451 to.<br>
 
 
 ## Notes:
