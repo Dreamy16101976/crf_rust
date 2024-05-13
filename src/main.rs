@@ -15,12 +15,12 @@ extern crate chrono;
 extern crate image;
 
 use chrono::{DateTime, Local};
+use std::env;
 use std::fs::File;
 use std::path::Path;
-use std::time::SystemTime;
-use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
-use std::env;
+use std::sync::Arc;
+use std::time::SystemTime;
 
 const SEALED_LIMIT: f32 = 70.0; //limit for sealed camera lens
 const LIMIT: u8 = 150; //limit for color channel for event
@@ -34,31 +34,35 @@ fn main() {
     //camera select
     let cam_idx: u32;
     let args: Vec<String> = env::args().collect();
-    if args.len()>1 {
-        cam_idx = args[1].parse::<u32>().unwrap();
+    if args.len() > 1 {
+        let cam_idx_res = args[1].parse::<u32>();
+        if let Err(_) = cam_idx_res {
+            println!("Camera index is incorrect! Exited...");
+            std::process::exit(0);
+        }
+        cam_idx = cam_idx_res.unwrap();
         println!("Camera {} selected", cam_idx);
     } else {
         cam_idx = 0;
         println!("Camera 0 selected by default");
     }
-    
-    
+
     //camera test
     let cam1 = camera_capture::create(cam_idx);
-        if let Err(_) = cam1 {
-            println!("Could not open camera {}! Exited...", cam_idx);
-            std::process::exit(0);
-        }
+    if let Err(_) = cam1 {
+        println!("Could not open camera {}! Exited...", cam_idx);
+        std::process::exit(0);
+    }
     println!("Camera {} has been successfully opened", cam_idx);
 
     let cam2 = cam1.unwrap().fps(FRAMERATE).unwrap().start();
-        if let Err(_) = cam2 {
-            println!("Could retrieve data from camera {}! Exited...", cam_idx);
-            std::process::exit(0);
-        }
+    if let Err(_) = cam2 {
+        println!("Could retrieve data from camera {}! Exited...", cam_idx);
+        std::process::exit(0);
+    }
     println!("Camera {} has been successfully configured", cam_idx);
     let mut cam = cam2.unwrap();
-    
+
     let img = cam.next().unwrap();
     let img_width = img.dimensions().0;
     let img_height = img.dimensions().1;
@@ -75,7 +79,7 @@ fn main() {
     let mut blue_evt;
     let mut distance: f32;
     let mut check = true;
-    
+
     let kill = Arc::new(AtomicBool::new(false));
     let kill_cloned = kill.clone();
 
@@ -83,9 +87,12 @@ fn main() {
         println!("");
         println!("CTRL-C pressed...");
         kill_cloned.store(true, Ordering::SeqCst);
-    }).expect("Error setting Ctrl-C handler");
+    })
+    .expect("Error setting Ctrl-C handler");
 
-    let mut start = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).expect("");
+    let mut start = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .expect("");
     let mut stop;
     let mut cnt: u16 = 0;
     loop {
@@ -98,15 +105,17 @@ fn main() {
         if check {
             println!("Sealed camera lens check...");
             //sealed cam test
-            for pixel in img.pixels() { //loop for all pixels
+            for pixel in img.pixels() {
+                //loop for all pixels
                 //color channels for current pixel get
                 red = pixel[0];
                 green = pixel[1];
                 blue = pixel[2];
                 //color distance calc
-                distance =
-                    (red as f32 * red as f32 + green as f32 * green as f32 + blue as f32 * blue as f32)
-                        .sqrt();
+                distance = (red as f32 * red as f32
+                    + green as f32 * green as f32
+                    + blue as f32 * blue as f32)
+                    .sqrt();
                 if distance > max {
                     max = distance;
                 }
@@ -122,15 +131,18 @@ fn main() {
             }
             check = false;
             println!("O.K.");
-            println!("Capture start...");
-            start = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).expect("");
+            println!("Capture started...");
+            start = SystemTime::now()
+                .duration_since(SystemTime::UNIX_EPOCH)
+                .expect("");
             cnt = 0;
         }
         flag = false;
         red_evt = 0;
         green_evt = 0;
         blue_evt = 0;
-        for pixel in img.pixels() { //loop for all pixels
+        for pixel in img.pixels() {
+            //loop for all pixels
             //color channels for current pixel get
             red = pixel[0];
             green = pixel[1];
@@ -142,16 +154,20 @@ fn main() {
             if distance > max {
                 max = distance;
                 flag = false;
-                if red > LIMIT { //event detected
+                if red > LIMIT {
+                    //event detected
                     flag = true;
                 }
-                if green > LIMIT { //event detected
+                if green > LIMIT {
+                    //event detected
                     flag = true;
                 }
-                if blue > LIMIT { //event detected
+                if blue > LIMIT {
+                    //event detected
                     flag = true;
                 }
-                if flag == true { //color channels for event save
+                if flag == true {
+                    //color channels for event save
                     red_evt = red;
                     green_evt = green;
                     blue_evt = blue;
