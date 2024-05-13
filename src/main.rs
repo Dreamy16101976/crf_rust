@@ -44,16 +44,22 @@ fn main() {
     
     
     //camera test
-    match camera_capture::create(cam_idx).unwrap().fps(FRAMERATE) {
-        Ok(_) => println!("Camera is O.K."),
-        Err(_) => { println!("Camera ERROR! Exited...") ;
-            std::process::exit(0); },
-    }
+    let cam1 = camera_capture::create(cam_idx);
+        if let Err(_) = cam1 {
+            println!("Could not open camera {}! Exited...", cam_idx);
+            std::process::exit(0);
+        }
+    println!("Camera {} has been successfully opened", cam_idx);
 
-    let cam = camera_capture::create(cam_idx).unwrap();
-    let mut cam_iter = cam.fps(FRAMERATE).unwrap().start().unwrap();
-
-    let img = cam_iter.next().unwrap();
+    let cam2 = cam1.unwrap().fps(FRAMERATE).unwrap().start();
+        if let Err(_) = cam2 {
+            println!("Could retrieve data from camera {}! Exited...", cam_idx);
+            std::process::exit(0);
+        }
+    println!("Camera {} has been successfully configured", cam_idx);
+    let mut cam = cam2.unwrap();
+    
+    let img = cam.next().unwrap();
     let img_width = img.dimensions().0;
     let img_height = img.dimensions().1;
     println!("WIDTH: {}", img_width);
@@ -87,7 +93,7 @@ fn main() {
             println!("Killed...");
             break;
         }
-        let img = cam_iter.next().unwrap();
+        let img = cam.next().unwrap();
         max = 0.0;
         if check {
             println!("Sealed camera lens check...");
@@ -184,4 +190,4 @@ fn main() {
             }
         }
     }
-} 
+}
