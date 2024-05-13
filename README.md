@@ -35,7 +35,7 @@ By default, the camera with index 0 is selected for capturing frames. You can ch
 <br>
 Frames from the camera is read in a loop and it is determined whether for the pixel with the largest color distance, the level of any color channel exceeds the specified limit..<br>
 if so, the event is logged and the frame is saved in PNG-file <i>YYYYMMDDHHMMSSmmm.png</i>.<br>
-Press Ctrl-C to exit from the program.<br>
+Press Ctrl-C to exit from the program.<br><br>
 
 <i>v4l2-ctl</i> is a utility allowing to control the camera subsystem.<br>
 You can install v4l2-ctl by running the following command:
