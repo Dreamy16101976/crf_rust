@@ -50,6 +50,11 @@ v4l2-ctl --list-devices
 ```
 Result:<br>
 ```
+Vimicro USB Camera (Altair): Vi (usb-0000:00:14.0-4.2):
+	/dev/video2
+	/dev/video3
+	/dev/media1
+
 USB2.0 VGA UVC WebCam: USB2.0 V (usb-0000:00:14.0-5):
 	/dev/video0
 	/dev/video1
