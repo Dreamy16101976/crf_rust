@@ -60,7 +60,7 @@ To increase the frame capture speed, you can use the following commands:<br>
 v4l2-ctl -d 0 -c auto_exposure=1
 v4l2-ctl -d 0 -c exposure_time_absolute=250
 ```
-In my case, this increased the capture speed from 451 to 895.<br>
+In my case, this increased the capture speed from 451 to 895..923.<br>
 
 
 ## Notes:
