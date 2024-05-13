@@ -49,6 +49,12 @@ USB2.0 VGA UVC WebCam: USB2.0 V (usb-0000:00:14.0-5):
 	/dev/video1
 	/dev/media0
 ```
+To increase the frame capture speed, you can use the following commands:<br>
+```
+v4l2-ctl -d 0 -c auto_exposure=1
+v4l2-ctl -d 0 -c exposure_time_absolute=250
+```
+
 
 
 ## Notes:
