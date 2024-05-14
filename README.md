@@ -1,5 +1,5 @@
 # crf_rust
-<i>crf_rust</i> - implementation of the programming language Rust registration procedures falling particles of cosmic radiation in the digital camera sensor (<i>Cosmic Ray Finder</i>).<br/><br/>
+<i>crf_rust</i> - implementation of the programming language Rust registration procedures falling particles of cosmic radiation (cosmic rays) in the digital camera sensor (<i>Cosmic Ray Finder</i>).<br/><br/>
 Copyright (C) 2024 <i>Alexey "FoxyLab" Voronin</i><br/>
 <i>Email</i>:    support@foxylab.com<br/>
 <i>Website</i>:  https://acdc.foxylab.com<br/>
