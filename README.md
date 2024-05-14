@@ -85,3 +85,9 @@ Polatoğlu, A., & Yeşilyaprak, C. (2023). Using and Testing Camera Sensors with
 
 DIY Cosmic Ray Detector Using a Webcam and Lead Shielding [YouTube](https://youtu.be/k-Nxso1DdhA?feature=shared)
 
+## Alternative projects
+
+[WebCam-Cosmic-Rays](https://github.com/Naimish240/WebCam-Cosmic-Rays)
+
+
+
