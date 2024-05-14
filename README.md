@@ -35,12 +35,14 @@ By default, the camera with index 0 is selected for capturing frames. You can ch
 <br>
 Frames from the camera is read in a loop and it is determined whether for the pixel with the largest color distance, the level of any color channel exceeds the specified limit..<br>
 if so, the event is logged and the frame is saved in PNG-file <i>YYYYMMDDHHMMSSmmm.png</i>.<br>
+
 ```
 EVENT!
 R: 207 G: 231 B: 179
 TIME: 2024/05/14 18:59:21.842
 20240514185921842.png
 ```
+
 You can view the particle traces registered using this program in the folder <i>events</i>.<br>
 Press Ctrl-C to exit from the program.<br><br>
 
