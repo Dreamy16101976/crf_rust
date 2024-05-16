@@ -75,6 +75,15 @@ v4l2-ctl -d 0 -c exposure_time_absolute=250
 ```
 In my case, this increased the capture speed from 451 to 895..923 for UVC cam and from 487 to 895..937 for Vimicro cam.<br>
 
+I also experimented with increasing the exposure time for Vimicro cam:
+
+```
+v4l2-ctl -d 0 -c auto_exposure=1
+v4l2-ctl -d 0 -c exposure_time_absolute=16384
+```
+
+In this case, the capture speed stabilizes at the level 300-301.<br>
+
 
 ## Notes:
 This can surely be optimized. 
