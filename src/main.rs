@@ -1,5 +1,5 @@
 //Cosmic Ray Finder (Rust version)
-//v.0.0.3
+//v.0.0.4
 //(C) 2024 Alexey "FoxyLab" Voronin
 //https://acdc.foxylab.com
 
@@ -8,6 +8,7 @@ Whats new:
 v.0.0.1 - first version
 v.0.0.2 - added sealed camera lens test
 v.0.0.3 - added camera select & camera test
+v.0.0.4 - added calibrate of limit
 */
 
 extern crate camera_capture;
@@ -22,13 +23,13 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use std::time::SystemTime;
 
-const SEALED_LIMIT: f32 = 70.0; //limit for sealed camera lens
-const LIMIT: u8 = 150; //limit for color channel for event
+const SEALED_LIMIT: f32 = 200.0; //limit for sealed camera lens
 const CNT_MAX: u16 = 1000; //number of frames for speed calc
 const FRAMERATE: f64 = 30.0;
+const LIMIT_ADD: u8 = 25;
 
 fn main() {
-    println!("Cosmic Ray Finder (Rust version) v.0.0.3");
+    println!("Cosmic Ray Finder (Rust version) v.0.0.4");
     println!("(C) 2024 Alexey \"FoxyLab\" Voronin");
     println!("https://acdc.foxylab.com");
     //camera select
@@ -79,6 +80,7 @@ fn main() {
     let mut blue_evt;
     let mut distance: f32;
     let mut check = true;
+    let mut limit: u8 = 175; //limit for color channel for event
 
     let kill = Arc::new(AtomicBool::new(false));
     let kill_cloned = kill.clone();
@@ -103,7 +105,7 @@ fn main() {
         let img = cam.next().unwrap();
         max = 0.0;
         if check {
-            println!("Sealed camera lens check...");
+            println!("Calibration...");
             //sealed cam test
             for pixel in img.pixels() {
                 //loop for all pixels
@@ -121,14 +123,16 @@ fn main() {
                 }
             }
             println!("MAX: {}", max as u32);
-            if max > SEALED_LIMIT {
-                println!("Seal the camera lens from light and try again!");
-                let test_path = Path::new("check.png");
+            let test_path = Path::new("check.png");
                 let _ = &mut File::create(&test_path).unwrap();
                 img.save(&test_path).unwrap();
                 println!("Test frame saved to check.png");
+            if max > SEALED_LIMIT {
+                println!("Seal the camera lens from light and try again!");
                 std::process::exit(0);
             }
+            limit = max as u8 + LIMIT_ADD;
+            println!("LIMIT: {}", limit);
             check = false;
             println!("O.K.");
             println!("Capture started...");
@@ -154,15 +158,15 @@ fn main() {
             if distance > max {
                 max = distance;
                 flag = false;
-                if red > LIMIT {
+                if red > limit {
                     //event detected
                     flag = true;
                 }
-                if green > LIMIT {
+                if green > limit {
                     //event detected
                     flag = true;
                 }
-                if blue > LIMIT {
+                if blue > limit {
                     //event detected
                     flag = true;
                 }
