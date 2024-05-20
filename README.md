@@ -33,7 +33,15 @@ By default, the camera with index 0 is selected for capturing frames. You can ch
 ```
 
 <br>
-When the program starts (and every 10,000 frames), calibration is performed to determine the limit when an event is detected.<br>
+When the program starts (and every 10,000 frames), calibration is performed to determine the limit when an event is detected:<br>
+
+```
+Calibration...
+MAX: 60 58 55 56 58 56 52 65 62 54 62 62 62 54 54 60 64 59 60 68 55 63 59 62 57 57 59 53 61 55
+Camera has been successfully calibrated
+LIMIT: 89
+```
+<br>
 
 Frames from the camera is read in a loop and it is determined whether for the pixel with the largest color distance, the level of any color channel exceeds the specified limit.<br>
 if so, the event is logged and the frame is saved in PNG-file <i>YYYYMMDDHHMMSSmmm.png</i>.<br>
